@@ -63,11 +63,6 @@ namespace HelloWorld
             }
             choosedColor.Value = newColor;
 
-            string uc = "";
-            foreach(int i in helloWorldManager.usedColors) {
-                uc +=  i + " ";
-            }
-            Debug.Log("UsedColors: " + helloWorldManager.usedColors.Count + ": " + uc);
         }
 
         [ServerRpc]
@@ -90,15 +85,15 @@ namespace HelloWorld
         void Update()
         {
             if (IsOwner) {
-                if (Input.GetKeyDown(KeyCode.LeftArrow)) { SubmitPositionServerRpc(- movingDistance, 0); }
-                if (Input.GetKeyDown(KeyCode.RightArrow)) { SubmitPositionServerRpc(movingDistance, 0); }
-                if (Input.GetKeyDown(KeyCode.UpArrow)) { SubmitPositionServerRpc(0, movingDistance); }
-                if (Input.GetKeyDown(KeyCode.DownArrow)) { SubmitPositionServerRpc(0, -movingDistance); }
-                if (Input.GetKeyDown(KeyCode.Space)) { SubmitPositionJumpingServerRpc(); }
+                if (Input.GetKeyDown(KeyCode.LeftArrow))   SubmitPositionServerRpc(- movingDistance, 0);
+                if (Input.GetKeyDown(KeyCode.RightArrow))  SubmitPositionServerRpc(movingDistance, 0);
+                if (Input.GetKeyDown(KeyCode.UpArrow))     SubmitPositionServerRpc(0, movingDistance);
+                if (Input.GetKeyDown(KeyCode.DownArrow))   SubmitPositionServerRpc(0, -movingDistance);
+
+                if (Input.GetKeyDown(KeyCode.Space)) SubmitPositionJumpingServerRpc();
             }
 
             GetComponent<MeshRenderer>().material = materials[choosedColor.Value];
-            //transform.position = Position.Value;
         }
 
         void Start() {
