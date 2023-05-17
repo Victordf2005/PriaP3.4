@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HelloWorld
+namespace PlayerNS
 {
-    public class HelloWorldPlayer : NetworkBehaviour
+    public class Player : NetworkBehaviour
     {
 
         public NetworkVariable<int> choosedColor = new NetworkVariable<int>();
@@ -13,7 +13,7 @@ namespace HelloWorld
 
         public List<Material> materials = new List<Material>();
 
-        private HelloWorldManager helloWorldManager;
+        private PlayerManager playerManager;
 
         private float movingDistance = 0.1f;
         private Rigidbody rb;
@@ -23,7 +23,7 @@ namespace HelloWorld
         private bool firstColorChange = true;
 
         void Awake() {
-            helloWorldManager = GameObject.Find("HelloWorldManager").GetComponent<HelloWorldManager>();
+            playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
             usedColors = new NetworkList<int>();
             rb = GetComponent<Rigidbody>();
         }
@@ -50,14 +50,14 @@ namespace HelloWorld
             // Escollemos unha cor libre aleatoriamente
             while (newColor < 0)  {
                 newColor = Random.Range(0, materials.Count);
-                if (helloWorldManager.usedColors.Contains(newColor)) {
+                if (playerManager.usedColors.Contains(newColor)) {
                     newColor = -1;
                 }
             }
 
-            helloWorldManager.AddColor(newColor);
+            playerManager.AddColor(newColor);
             if (! firstColorChange) {
-                helloWorldManager.RemoveColor(oldColor);
+                playerManager.RemoveColor(oldColor);
             } else {                
                 firstColorChange = false;
             }
