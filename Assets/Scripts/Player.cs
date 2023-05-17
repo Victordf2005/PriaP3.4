@@ -9,8 +9,6 @@ namespace PlayerNS
     {
 
         public NetworkVariable<int> choosedColor = new NetworkVariable<int>();
-        public NetworkList<int> usedColors;
-
         public List<Material> materials = new List<Material>();
 
         private PlayerManager playerManager;
@@ -24,16 +22,10 @@ namespace PlayerNS
 
         void Awake() {
             playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-            usedColors = new NetworkList<int>();
             rb = GetComponent<Rigidbody>();
         }
 
-        public override void OnNetworkSpawn() 
-        {
-            if (IsOwner)             {
-                SubmitInitialPositionRequestServerRpc();
-                ChangeColor();
-            }
+        public override void OnNetworkSpawn() {
         }
 
         public void ChangeColor()
@@ -56,6 +48,9 @@ namespace PlayerNS
             }
 
             playerManager.AddColor(newColor);
+            // Cando mude de cor, eliminamos a cor anterior
+            // da listaxe de cores en uso. Agás se eliximos
+            // a cor por primeira vez
             if (! firstColorChange) {
                 playerManager.RemoveColor(oldColor);
             } else {                
@@ -98,6 +93,7 @@ namespace PlayerNS
 
         void Start() {
             if (IsOwner) {
+                SubmitInitialPositionRequestServerRpc();
                 ChangeColor();
             }
         }
