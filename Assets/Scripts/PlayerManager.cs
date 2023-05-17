@@ -1,9 +1,9 @@
 using Unity.Netcode;
 using UnityEngine;
 
-namespace HelloWorld
+namespace PlayerNS
 {
-    public class HelloWorldManager : NetworkBehaviour
+    public class PlayerManager : NetworkBehaviour
     {
 
         public NetworkList<int> usedColors;
@@ -51,12 +51,12 @@ namespace HelloWorld
             if (GUILayout.Button("Change color"))
             {
                 var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
-                var player = playerObject.GetComponent<HelloWorldPlayer>();
+                var player = playerObject.GetComponent<Player>();
                 player.ChangeColor();
             }
         }
         
-        public void AddColor(int color) {
+        public void AddColor(int color) {            
             usedColors.Add(color);
         }
 
