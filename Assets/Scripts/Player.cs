@@ -28,6 +28,13 @@ namespace PlayerNS
         public override void OnNetworkSpawn() {
         }
 
+        public override void OnNetworkDespawn() {
+            // Cando un/unha xogador/a abandone a partida
+            // eliminamos a cor que tiña
+            // da listaxe de cores en uso
+            playerManager.RemoveColor(choosedColor.Value);
+        }
+
         public void ChangeColor()
         {
             SubmitChangeColorServerRpc(); 
